@@ -22,7 +22,7 @@
     }
     .searchMsg {
       .searchMsgIcon {
-        background-position: -2.58rem 0 !important;
+        background-position: -2.6rem 0 !important;
       }
       color: #333 !important;
     }
