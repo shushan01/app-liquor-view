@@ -5,7 +5,7 @@
     background: #ffffff !important;
     .scanCode {
       .searchQrcodeIcon {
-        background-position: -1.933rem 0 !important;
+        background-position: -3.6rem -0.27rem !important;
       }
       color: #333 !important;
     }
@@ -22,7 +22,7 @@
     }
     .searchMsg {
       .searchMsgIcon {
-        background-position: -2.6rem 0 !important;
+        background-position: -2.58rem 0 !important;
       }
       color: #333 !important;
     }
@@ -44,6 +44,11 @@
       display: block;
       background: url('~jd/images/searchIcon.png') no-repeat;
       background-size: 600% 100%;
+    }
+    .searchIcon2 {
+      display: block;
+      background: url('~jd/images/navbar2.png') no-repeat;
+      background-size: 2400% 230%;
     }
     .searchInput {
       width: 100%;
@@ -82,7 +87,7 @@
       .searchQrcodeIcon {
         width: .65rem;
         height: .65rem;
-        background-position: 0 0;
+        background-position: -5.2rem -0.27rem
       }
     }
     .searchMsg {
@@ -290,22 +295,22 @@
     <div class="searchRusult" :class="Status?'scrollbtm':''" v-if="!searchVisiblie">
       <slot name="left-icon">
         <div class="scanCode">
-          <i class="searchIcon searchQrcodeIcon"></i>
-          <span>扫一扫</span>
+          <i class="searchIcon2 searchQrcodeIcon"></i>
+          <!--<span>类目</span>-->
         </div>
       </slot>
       <div class="searchInput" @click="()=>searchVisiblie=true">
         <slot name="title-icon">
           <div class="search-box">
             <i class="searchIcon searchContentIcon"></i>
-            <span>MacBook Pro 15.4寸</span>
+            <span>搜索商品、分类</span>
           </div>
         </slot>
       </div>
       <slot name="right-icon">
         <div class="searchMsg">
           <i class="searchIcon searchMsgIcon"></i>
-          <span>消息</span>
+          <!--<span>消息</span>-->
         </div>
       </slot>
     </div>
