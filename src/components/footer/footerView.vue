@@ -28,22 +28,29 @@
       background: url('~jd/images/navbar.png') 0 0 no-repeat;
       background-size: 850% 105%;
     }
+    .barIcon2 {
+      width: 2rem;
+      height: 100%;
+      cursor: pointer;
+      background: url('~jd/images/footer.png') 0 0 no-repeat;
+      background-size: 420% 115%;
+    }
     .home {
-      background-position: .1rem -0.075rem;
+      background-position: .1rem -0.07rem;
       &.active {
-        background-position: -1.585rem -0.02rem;
+        background-position: -1.585rem -0.05rem;
       }
     }
     .category {
-      background-position: -3.25rem -0.075rem;
+      background-position: 0rem -0.1rem;
       &.active {
-        background-position: -4.948rem -0.070rem;
+        background-position: -4.14rem -0.1rem;
       }
     }
     .find {
-      background-position: -6.654rem -0.075rem;
+      background-position: -2.0rem -0.1rem;
       &.active {
-        background-position: -8.37rem -0.075rem;
+        background-position: -6.14rem -0.1rem;
       }
     }
     .cart {
@@ -64,8 +71,8 @@
 <template>
   <ul class="nav-bar fool">
     <li :class="['barIcon','home',$route.name==='index'?'active':'']" @click="$router.push('/index')"></li>
-    <li :class="['barIcon','category',$route.name==='category'?'active':'']" @click="$router.push('/category')"></li>
-    <li :class="['barIcon','find',$route.name==='article'?'active':'']" @click="$router.push('/article')"></li>
+    <li :class="['barIcon2','category',$route.name==='category'?'active':'']" @click="$router.push('/category')"></li>
+    <li :class="['barIcon2','find',$route.name==='article'?'active':'']" @click="$router.push('/article')"></li>
     <li :class="['barIcon','cart',$route.name==='cart'?'active':'']" @click="$router.push('/cart')"></li>
     <li :class="['barIcon','myHome',$route.name==='myhome'?'active':'']" @click="$router.push('/myhome')"></li>
   </ul>
