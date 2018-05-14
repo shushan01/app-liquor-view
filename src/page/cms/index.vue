@@ -277,9 +277,17 @@
         .floor-container-bom {
             @include flexbox(center, center, row, nowrap);
             .f-c-b-prd-item {
-                width: 25%;
+                width: 33.3%;
                 position: relative;
                 padding: .2rem;
+                .product-img {
+                    text-align: center;
+                }
+                .product-price {
+                    text-align: center;
+                    font-size: 16px;
+                    color: #e4393c;
+                }
                 img {
                     max-width: 60px;
                 }
@@ -518,6 +526,13 @@
                 </mt-swipe>
             </div>
             <!-- tabBanner -->
+            <!-- 底部资讯 -->
+            <div class="floor">
+                <div class="container-bg">
+                    <img src="~assets/test/img/floot.png" alt="">
+                </div>
+            </div>
+            <!-- 底部资讯 -->
             <!-- 酒花 -->
             <div class="jd-express-news">
                 <div class="jd-kuaibao">
@@ -534,114 +549,43 @@
             </div>
             <!-- 酒花 -->
 
-            <!-- 爱生活为您推荐 -->
+            <!-- 为您推荐 -->
             <div class="floor">
                 <div class="floor-title">
                     <img src="~jd/images/tuijian.png" alt="">
                 </div>
-                <div class="floor-container">
-                    <div class="f-c-l">
-                        <div class="seckill-t">
-                            <strong class="seckill-title"
-                                    style="background-image: -webkit-linear-gradient(left, rgb(255, 42, 42), rgb(241, 57, 210));-webkit-background-clip: text;-webkit-text-fill-color: transparent;">{{cmsData.jd_loveLife[0].content}}</strong>
-                            <p class="seckill-summary">{{cmsData.jd_loveLife[0].summary}}</p>
-                        </div>
-                        <div class="f-c-l-prd">
-                            <img v-lazy.jd="item.image_url[0].url" alt=""
-                                 @click="$router.push(`/product/${item.productNo}`)"
-                                 v-for="(item,index) in cmsData.jd_loveLife[0].product_list"
-                                 :key="index" v-if="index<2">
-                        </div>
-                    </div>
-                    <div class="f-c-r">
-                        <div class="seckill-t">
-                            <strong class="seckill-title"
-                                    style="background-image: -webkit-linear-gradient(left, rgb(255, 42, 42), rgb(241, 57, 210));-webkit-background-clip: text;-webkit-text-fill-color: transparent;">{{cmsData.jd_loveLife[1].content}}</strong>
-                            <p class="seckill-summary">{{cmsData.jd_loveLife[1].summary}}</p>
-                        </div>
-                        <div class="f-c-l-prd">
-                            <img v-lazy.jd="item.image_url[0].url" alt=""
-                                 @click="$router.push(`/product/${item.productNo}`)"
-                                 v-for="(item,index) in cmsData.jd_loveLife[1].product_list"
-                                 :key="index" v-if="index<2">
-                        </div>
-                    </div>
-                </div>
-                <div class="floor-container">
-                    <div class="f-c-l">
-                        <div class="seckill-t">
-                            <strong class="seckill-title"
-                                    style="background-image: -webkit-linear-gradient(left, rgb(255, 42, 42), rgb(241, 57, 210));-webkit-background-clip: text;-webkit-text-fill-color: transparent;">{{cmsData.jd_loveLife[2].summary}}</strong>
-                            <p class="seckill-summary">{{cmsData.jd_loveLife[2].summary}}</p>
-                        </div>
-                        <div class="f-c-l-prd">
-                            <img v-lazy.jd="item.image_url[0].url" alt=""
-                                 @click="$router.push(`/product/${item.productNo}`)"
-                                 v-for="(item,index) in cmsData.jd_loveLife[2].product_list"
-                                 :key="index" v-if="index<2">
-                        </div>
-                    </div>
-                    <div class="f-c-r">
-                        <div class="seckill-t">
-                            <strong class="seckill-title"
-                                    style="background-image: -webkit-linear-gradient(left, rgb(255, 42, 42), rgb(241, 57, 210));-webkit-background-clip: text;-webkit-text-fill-color: transparent;">{{cmsData.jd_jiaju.content}}</strong>
-                            <p class="seckill-summary">{{cmsData.jd_jiaju.summary}}</p>
-                        </div>
-                        <div class="f-c-l-prd">
-                            <img v-lazy.jd="item.image_url[0].url" alt=""
-                                 @click="$router.push(`/product/${item.productNo}`)"
-                                 v-for="(item,index) in cmsData.jd_jiaju.product_list"
-                                 :key="index" v-if="index<2">
-                        </div>
-                    </div>
-                </div>
-                <div class="floor-container-bom">
+                <div class="floor-container-bom" v-for="n in 2">
                     <div class="f-c-b-prd-item">
-                        <div class="seckill-t">
-                            <strong class="seckill-title"
-                                    style="background-image: -webkit-linear-gradient(left, rgb(255, 42, 42), rgb(241, 57, 210));-webkit-background-clip: text;-webkit-text-fill-color: transparent;">{{cmsData.jd_baobao.content}}</strong>
-                            <p class="seckill-summary">{{cmsData.jd_baobao.summary}}</p>
-                        </div>
                         <div class="product-img">
-                            <img @click="$router.push(`/product/${cmsData.jd_baobao.product_list[0].productNo}`)"
-                                 v-lazy.jd="cmsData.jd_baobao.product_list[0].image_url[0].url"
+                            <img @click=""
+                                 v-lazy.jd="cmsData.jd_tujia1.url"
                                  alt="">
+                        </div>
+                        <div class="seckill-t">
+                            <p class="seckill-summary">{{cmsData.jd_tujia1.text}}</p>
+                            <p class="product-price">￥{{cmsData.jd_tujia1.price}}</p>
                         </div>
                     </div>
                     <div class="f-c-b-prd-item">
-                        <div class="seckill-t">
-                            <strong class="seckill-title"
-                                    style="background-image: -webkit-linear-gradient(left, rgb(255, 42, 42), rgb(241, 57, 210));-webkit-background-clip: text;-webkit-text-fill-color: transparent;">{{cmsData.jd_beautiful.content}}</strong>
-                            <p class="seckill-summary">{{cmsData.jd_beautiful.summary}}</p>
-                        </div>
                         <div class="product-img">
-                            <img @click="$router.push(`/product/${cmsData.jd_beautiful.product_list[0].productNo}`)"
-                                 v-lazy.jd="cmsData.jd_beautiful.product_list[0].image_url[0].url"
+                            <img @click=""
+                                 v-lazy.jd="cmsData.jd_tujia2.url"
                                  alt="">
+                        </div>
+                        <div class="seckill-t">
+                            <p class="seckill-summary">{{cmsData.jd_tujia2.text}}</p>
+                            <p class="product-price">￥{{cmsData.jd_tujia2.price}}</p>
                         </div>
                     </div>
                     <div class="f-c-b-prd-item">
-                        <div class="seckill-t">
-                            <strong class="seckill-title"
-                                    style="background-image: -webkit-linear-gradient(left, rgb(255, 42, 42), rgb(241, 57, 210));-webkit-background-clip: text;-webkit-text-fill-color: transparent;">{{cmsData.jd_food.content}}</strong>
-                            <p class="seckill-summary">{{cmsData.jd_food.summary}}</p>
-                        </div>
                         <div class="product-img">
-                            <img @click="$router.push(`/product/${cmsData.jd_food.product_list[0].productNo}`)"
-                                 v-lazy.jd="cmsData.jd_food.product_list[0].image_url[0].url"
+                            <img @click=""
+                                 v-lazy.jd="cmsData.jd_tujia3.url"
                                  alt="">
                         </div>
-                    </div>
-                    <div class="f-c-b-prd-item">
                         <div class="seckill-t">
-                            <strong class="seckill-title"
-                                    style="background-image: -webkit-linear-gradient(left, rgb(255, 42, 42), rgb(241, 57, 210));-webkit-background-clip: text;-webkit-text-fill-color: transparent;">{{cmsData.jd_clothes.content}}</strong>
-                            <p class="seckill-summary">{{cmsData.jd_clothes.summary}}</p>
-                        </div>
-                        <div class="product-img">
-                            <img @click="$router.push(`/product/${cmsData.jd_clothes.product_list[0].productNo}`)"
-                                 v-lazy.jd="cmsData.jd_clothes.product_list[0].image_url[0].url"
-                                 alt="">
+                            <p class="seckill-summary">{{cmsData.jd_tujia3.text}}</p>
+                            <p class="product-price">￥{{cmsData.jd_tujia3.price}}</p>
                         </div>
                     </div>
                 </div>
@@ -755,11 +699,33 @@
                 //酒花
                 let jiuhuas = [];
                 let jiuhua1 = {};
-                jiuhua1.article_title ="【酒花】 5ml 体验贵州 53°酱香型";
+                jiuhua1.article_title = "【酒花】 5ml 体验贵州 53°酱香型";
                 let jiuhua2 = {};
-                jiuhua2.article_title ="【酒花】 5ml 体验国标酱香 53°酱香型";
+                jiuhua2.article_title = "【酒花】 5ml 经典海之蓝 53°酱香型";
                 jiuhuas.push(jiuhua2);
+                let jiuhua3 = {};
+                jiuhua3.article_title = "【酒花】 5ml 体验国标酱香 53°酱香型";
+                jiuhuas.push(jiuhua3);
+                let jiuhua4 = {};
+                jiuhua4.article_title = "【酒花】 5ml 飞天茅台 53°酱香型";
+                jiuhuas.push(jiuhua4);
                 Data.life = jiuhuas;
+                //推荐
+                let jd_tujia1 = {};
+                jd_tujia1.url = baseUrl + "/tuijian01.jpg";
+                jd_tujia1.text = "飞天茅台 53°";
+                jd_tujia1.price = 1599;
+                Data.jd_tujia1 = jd_tujia1;
+                let jd_tujia2 = {};
+                jd_tujia2.url = baseUrl + "/tuijian02.jpg";
+                jd_tujia2.text = "洋河蓝色·梦之蓝";
+                jd_tujia2.price = 899;
+                Data.jd_tujia2 = jd_tujia2;
+                let jd_tujia3 = {};
+                jd_tujia3.url = baseUrl + "/tuijian03.jpg";
+                jd_tujia3.text = "唐小姐 梅子酒";
+                jd_tujia3.price = 299;
+                Data.jd_tujia3 = jd_tujia3;
                 this.cmsData = Data;
             },
             async initData() { //初始化数据

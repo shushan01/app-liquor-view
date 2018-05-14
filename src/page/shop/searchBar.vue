@@ -295,7 +295,7 @@
     <div class="searchRusult" :class="Status?'scrollbtm':''" v-if="!searchVisiblie">
       <slot name="left-icon">
         <div class="scanCode">
-          <i class="searchIcon2 searchQrcodeIcon"></i>
+          <i class="searchIcon2 searchQrcodeIcon" @click="$router.push('/category')"></i>
           <!--<span>类目</span>-->
         </div>
       </slot>
@@ -320,7 +320,7 @@
           <div class="searchInput" @click="$refs.searchInput.focus()">
             <div class="search-box">
               <i class="searchIcon searchContentIcon"></i>
-              <input v-model="Keyword" placeholder="MacBook Pro 15.4寸" ref="searchInput" v-searchFocus></input>
+              <input v-model="Keyword" placeholder="搜索商品、分类" ref="searchInput" v-searchFocus></input>
               <span class="clear" @click="Keyword=''" v-show="Keyword.length>0">&times;</span>
             </div>
           </div>
@@ -330,7 +330,7 @@
           <div class="search-hot">
             <p>热搜</p>
             <ul class="search-hot-list">
-              <li class="search-hot-item">智能手表</li>
+              <li class="search-hot-item">飞天茅台</li>
             </ul>
           </div>
           <div class="search-history">

@@ -71,10 +71,10 @@
 <template>
   <ul class="nav-bar fool">
     <li :class="['barIcon','home',$route.name==='index'?'active':'']" @click="$router.push('/index')"></li>
-    <li :class="['barIcon2','category',$route.name==='category'?'active':'']" @click="$router.push('/category')"></li>
-    <li :class="['barIcon2','find',$route.name==='article'?'active':'']" @click="$router.push('/article')"></li>
+    <li :class="['barIcon2','category',$route.name==='category'?'active':'']" @click="/*$router.push('/category')*/"></li>
+    <li :class="['barIcon2','find',$route.name==='article'?'active':'']" @click="/*$router.push('/article')*/"></li>
     <li :class="['barIcon','cart',$route.name==='cart'?'active':'']" @click="$router.push('/cart')"></li>
-    <li :class="['barIcon','myHome',$route.name==='myhome'?'active':'']" @click="$router.push('/myhome')"></li>
+    <li :class="['barIcon','myHome',$route.name==='myhome'?'active':'']" @click="/*$router.push('/myhome')*/"></li>
   </ul>
 </template>
 
