@@ -475,11 +475,11 @@
                         <ul class="tableTabs">
                             <li class="table-tabs-item">
                                 <i>
-                                    <img src="~jd/images/product.png" alt="">
+                                    <img src="~jd/images/product.png" @click="$router.push(`/productList`)">
                                 </i>
                                 <p>商品</p>
                             </li>
-                            <li class="table-tabs-item">
+                            <li class="table-tabs-item" @click="$router.push(`/category`)">
                                 <i>
                                     <img src="~jd/images/catgray.png" alt="">
                                 </i>

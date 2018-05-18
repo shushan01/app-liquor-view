@@ -4,6 +4,7 @@ import Router from 'vue-router'
 /* cms */
 const Index = () => import ('page/cms/index')
 const Article = () =>   import ('page/cms/article')
+const ProductList = () =>   import ('page/shop/productList')
 const ArticleDetail = () => import ('page/cms/articleDetail')
     /* cms */
 
@@ -39,6 +40,12 @@ const appRouter = {
                 path: '/index',
                 name: 'index',
                 component: Index,
+                meta: { keepAlive: true }
+            },
+            {
+                path: '/productList',
+                name: 'productList',
+                component: ProductList,
                 meta: { keepAlive: true }
             },
             {

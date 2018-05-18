@@ -5,6 +5,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import 'babel-polyfill'
+import '../static/font-icon/iconfont.css';
 // import 'promise-polyfill/src/polyfill'
 import '@/plugins/flexible'
 import MintUI from 'mint-ui'

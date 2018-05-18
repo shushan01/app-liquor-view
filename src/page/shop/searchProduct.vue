@@ -2,114 +2,6 @@
 <style lang="scss" scoped>
     @import '~assets/common/css/mixin.scss';
 
-    .scrollbtm {
-        background: #ffffff !important;
-        .scanCode {
-            .searchQrcodeIcon {
-                background-position: -3.6rem -0.27rem !important;
-            }
-            color: #333 !important;
-        }
-        .searchInput {
-            .search-box {
-                background: #e2e2e2 !important;
-                span {
-                    color: #ffffff !important;
-                }
-            }
-            .searchContentIcon {
-                background-position: -2.24rem 0 !important;
-            }
-        }
-        .searchMsg {
-            .searchMsgIcon {
-                background-position: -2.6rem 0 !important;
-            }
-            color: #333 !important;
-        }
-    }
-
-    .searchRusult {
-        position: fixed;
-        top: 0;
-        width: 10rem;
-        max-width: 10rem;
-        margin: 0 auto;
-        z-index: 10000;
-        transition: .6s;
-        @include flexbox(space-between, center, row, nowrap);
-        min-height: 40px;
-        padding: .1rem .1rem;
-        background: transparent;
-        .searchIcon {
-            display: block;
-            background: url('~jd/images/searchIcon.png') no-repeat;
-            background-size: 600% 100%;
-        }
-        .searchIcon2 {
-            display: block;
-            background: url('~jd/images/navbar2.png') no-repeat;
-            background-size: 2400% 230%;
-        }
-        .searchInput {
-            width: 100%;
-            .search-box {
-                background: #fff;
-                height: .8rem;
-                border-radius: .8rem;
-                @include flexbox(flex-start,
-                        center,
-                        row,
-                        nowrap);
-                padding: 0 .3rem;
-                .searchContentIcon {
-                    height: .45rem;
-                    width: .45rem;
-                    margin-right: .3rem;
-                    background-position: -0.46rem 0;
-                }
-                span {
-                    color: #999;
-                    font-size: 14px;
-                }
-            }
-        }
-        .scanCode {
-            min-width: 1rem;
-            @include flexbox(center,
-                    center,
-                    column,
-                    wrap);
-            color: #fff;
-            font-size: 12px;
-            span {
-                padding-top: 2px;
-            }
-            .searchQrcodeIcon {
-                width: .65rem;
-                height: .65rem;
-                background-position: -5.2rem -0.27rem
-            }
-        }
-        .searchMsg {
-            min-width: 1rem;
-            @include flexbox(center,
-                    center,
-                    column,
-                    wrap);
-            color: #fff;
-            font-size: 12px;
-            span {
-                padding-top: 2px;
-            }
-            .searchMsgIcon {
-                height: .65rem;
-                min-width: .65rem;
-                background-position: -1.3rem 0;
-            }
-        }
-    }
-
     .searchContainer {
         position: fixed;
         left: 0;
@@ -293,29 +185,57 @@
 </style>
 <template>
     <div style="position:relative;">
-        <div class="searchRusult" :class="Status?'scrollbtm':''" v-if="!searchVisiblie">
-            <slot name="left-icon">
-                <div class="scanCode">
-                    <i class="searchIcon2 searchQrcodeIcon" @click="$router.push('/category')"></i>
-                    <!--<span>类目</span>-->
-                </div>
-            </slot>
-            <div class="searchInput" @click="()=>searchVisiblie=true">
-                <slot name="title-icon">
-                    <div class="search-box">
-                        <i class="searchIcon searchContentIcon"></i>
-                        <span>搜索商品、分类</span>
+        <mt-popup v-model="searchVisiblie" :closeOnClickModal="true" :modal="false" position="right"
+                  class="modal-popup">
+            <div class="searchContainer">
+                <div class="search-top">
+                    <div class="searchInput" @click="$refs.searchInput.focus()">
+                        <div class="search-box">
+                            <i class="searchIcon searchContentIcon"></i>
+                            <input v-model="Keyword" placeholder="搜索商品、分类" ref="searchInput" v-searchFocus></input>
+                            <span class="clear" @click="Keyword=''" v-show="Keyword.length>0">&times;</span>
+                        </div>
                     </div>
-                </slot>
-            </div>
-            <slot name="right-icon">
-                <div class="searchMsg">
-                    <i class="searchIcon searchMsgIcon"></i>
-                    <!--<span>消息</span>-->
+                    <span @click="()=>{Keyword='';this.$emit('cancel',false);}">取消</span>
                 </div>
-            </slot>
-        </div>
-        <SearchProduct :searchVisiblie="searchVisiblie" v-on:cancel="cancel($event)"/>
+                <load-more v-show="Keyword.length<=0" style="width:100%;height:100%;background:#fff;">
+                    <div class="search-hot">
+                        <p>热搜</p>
+                        <ul class="search-hot-list">
+                            <li class="search-hot-item">飞天茅台</li>
+                        </ul>
+                    </div>
+                    <div class="search-history">
+                        <p>历史搜索</p>
+                        <ul class="search-history-list">
+                            <li class="search-history-item" @click="()=>Keyword = item.keywords"
+                                v-for="(item,index) in searchHistoryData" :key="index">{{item.keywords}}
+                            </li>
+                        </ul>
+                        <div class="clear-history">
+                            <i></i>
+                            <span>清空历史搜索</span>
+                        </div>
+                    </div>
+                </load-more>
+                <div class="search-rusult-content" v-show="Keyword.length>0">
+                    <load-more style="background:#fff;width: 100%;height: 100%;">
+                        <div class="search-rusult-goods">
+                            <i></i>
+                            <span>搜素 {{Keyword}}...</span>
+                        </div>
+                        <ul class="search-rusult-list" v-if="searchRusultData!=''">
+                            <li class="search-rusult-item" v-for="(item,index) in searchRusultData" :key="index"
+                                @click="selectedProd(item)">
+                                <p>{{item.productName}}</p>
+                            </li>
+                        </ul>
+                        <p style="text-align:center;text-align: left;padding: 10px;color: #81838e;font-size: 13px;border-bottom: 1px solid #e1e1e1;"
+                           v-else>暂无数据...</p>
+                    </load-more>
+                </div>
+            </div>
+        </mt-popup>
     </div>
 </template>
 
@@ -328,19 +248,17 @@
         setLocalStorage
     } from '@/utils/mixin'
     import LoadMore from 'common/loadMore';
-    import SearchProduct from 'page/shop/searchProduct';
 
     export default {
         data() {
             return {
-                searchVisiblie: false,
                 Keyword: '',
                 searchHistoryData: [],
                 searchRusultData: []
             };
         },
         props: {
-            Status: {
+            searchVisiblie: {
                 type: Boolean,
                 required: true
             }
@@ -363,8 +281,7 @@
             }
         },
         components: {
-            LoadMore,
-            SearchProduct
+            LoadMore
         },
 
         computed: {},
@@ -394,11 +311,7 @@
                     setLocalStorage('searchHistoryData', Data);
                 } catch (err) {
                 }
-            },
-            cancel(res) {
-                this.searchVisiblie = res;
             }
-
         },
 
         mounted: function () {
