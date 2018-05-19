@@ -1,234 +1,255 @@
 <!-- productList -->
 <style lang="scss" scoped>
-  @import '~assets/common/css/mixin.scss';
-  .search-rusult-container {
-    height: 100%;
-    .search-top {
-      @include flexbox(space-between,
-      center,
-      row,
-      nowrap);
-      padding: 10px 20px;
-      background: #fff;
-      border-bottom: 1px solid #eee;
-      .searchInput {
-        width: 90%;
-        .search-box {
-          width: 100%;
-          position: relative;
-          background: #f4f4f4;
-          padding: 5px 10px;
-          border-radius: 10px;
-          @include flexbox(space-between,
-          center,
-          row,
-          nowrap);
-          input {
-            width: 100%;
-            color: #333;
-            font-size: $subtitle;
-            outline: none;
-            border: none;
-            box-shadow: none;
-            text-shadow: none;
-            font-weight: normal;
-            background: transparent;
-          }
-          .searchIcon {
-            display: block;
-            height: .38rem;
-            margin-right: .05rem;
-            width: .4rem;
-            background: url('~jd/images/searchIcon.png') no-repeat;
-            background-size: 600% 100%;
-            background-position: -0.34rem 0;
-          }
-        }
-      }
-      >span {
-        text-align: center;
-        font-size: 15px;
-        min-width: 1.5rem;
-        color: $gray;
-      }
-    }
-    .search-filter{
-      // border-top: 1px solid $border;
-      border-bottom: 1px solid #eee;
-      .search-filter-list{
-        background: #fff;
-        @include flexbox(space-between,center,row,nowrap);
-        .search-filter-item{
-          width: 25%;
-          @include flexbox(center,center,row,nowrap);
-          color: #333;
-          font-size: 15px;
-          padding: 12px 0;
-          &.active{
-            color: $red;
-          }
-          &.more-sort{
-            position: relative;
-            &:after{
-              content:'';
-              position: absolute;
-              right: .5rem;
-              top: 44%;
-              width: 0;
-              height: 0;
-              border: 5px solid transparent;
-              border-top-color: $red;
-            }
-          }
-        }
-      }
-    }
-    .content{
-      width: 100%;
-      .product-list{
-        @include flexbox(flex-start,center,column,wrap);
-        .prod-item{
-          background: #fff;
-          @include flexbox(space-between,flex-start,row,nowrap);
-          padding: 5px 0px 0px 5px;
-          flex: initial;
-          img{
-            width: 125px;
-            height: 125px;
-          }
-          .prod-info{
-            margin-left: 10px;
-            padding-right: 5px;
+    @import '~assets/common/css/mixin.scss';
+
+    .search-rusult-container {
+        height: 100%;
+        .search-top {
+            @include flexbox(space-between,
+                    center,
+                    row,
+                    nowrap);
+            padding: 10px 20px;
+            background: #fff;
             border-bottom: 1px solid #eee;
-            @include flexbox(space-between,flex-start,column,wrap);
-            .prod-title{
-              font-size: $title;
-              color: #333;
-              @include textoverflow(2);
+            .searchInput {
+                width: 90%;
+                .search-box {
+                    width: 100%;
+                    position: relative;
+                    background: #f4f4f4;
+                    padding: 5px 10px;
+                    border-radius: 10px;
+                    @include flexbox(space-between,
+                            center,
+                            row,
+                            nowrap);
+                    input {
+                        width: 100%;
+                        color: #333;
+                        font-size: $subtitle;
+                        outline: none;
+                        border: none;
+                        box-shadow: none;
+                        text-shadow: none;
+                        font-weight: normal;
+                        background: transparent;
+                    }
+                    .searchIcon {
+                        display: block;
+                        height: .38rem;
+                        margin-right: .05rem;
+                        width: .4rem;
+                        background: url('~jd/images/searchIcon.png') no-repeat;
+                        background-size: 600% 100%;
+                        background-position: -0.34rem 0;
+                    }
+                }
             }
-            .prod-price{
-              color: $red;
-              margin-top: 50px;
-              text-align:left;
-              span{
-                font-size: $smsub;
-                margin-right: 5px;
-              }
-              strong{
-                font-size: 19px;
-              }
+            > span {
+                text-align: center;
+                font-size: 15px;
+                min-width: 1.5rem;
+                color: $gray;
             }
-            .prod-pro{
-              padding: 5px 0;
-              text-align: left;
-              color: $gray;
-              font-size: $subtitle;
-            }
-          }
         }
-      }
+        .search-filter {
+            // border-top: 1px solid $border;
+            border-bottom: 1px solid #eee;
+            .search-filter-list {
+                background: #fff;
+                @include flexbox(space-between, center, row, nowrap);
+                .search-filter-item {
+                    width: 25%;
+                    @include flexbox(center, center, row, nowrap);
+                    color: #333;
+                    font-size: 15px;
+                    padding: 12px 0;
+                    &.active {
+                        color: $red;
+                    }
+                    &.more-sort {
+                        position: relative;
+                        &:after {
+                            content: '';
+                            position: absolute;
+                            right: .5rem;
+                            top: 44%;
+                            width: 0;
+                            height: 0;
+                            border: 5px solid transparent;
+                            border-top-color: $red;
+                        }
+                    }
+                }
+            }
+        }
+        .content {
+            width: 100%;
+            .product-list {
+                @include flexbox(flex-start, center, column, wrap);
+                .prod-item {
+                    width: 100%;
+                    background: #fff;
+                    @include flexbox(space-between, flex-start, row, nowrap);
+                    padding: 5px 0px 0px 5px;
+                    flex: initial;
+                    img {
+                        width: 125px;
+                        height: 125px;
+                    }
+                    .prod-info {
+                        margin-left: 10px;
+                        padding-right: 5px;
+                        border-bottom: 1px solid #eee;
+                        @include flexbox(space-between, flex-start, column, wrap);
+                        .prod-title {
+                            font-size: $title;
+                            color: #333;
+                            @include textoverflow(2);
+                        }
+                        .prod-price {
+                            color: $red;
+                            margin-top: 50px;
+                            text-align: left;
+                            span {
+                                font-size: $smsub;
+                                margin-right: 5px;
+                            }
+                            strong {
+                                font-size: 19px;
+                            }
+                        }
+                        .prod-pro {
+                            padding: 5px 0;
+                            text-align: left;
+                            color: $gray;
+                            font-size: $subtitle;
+                        }
+                    }
+                }
+            }
+        }
     }
-  }
 
 </style>
 
 <template>
-  <div class="search-rusult-container">
-    <!-- 搜索框 -->
-    <div class="search-top">
-      <i class="ye-icon-category" @click="$router.go(-1)"></i>
-      <div class="searchInput">
-        <div class="search-box">
-          <i class="searchIcon searchContentIcon"></i>
-          <input placeholder="搜索商品、分类"  v-on:focus="$router.push('/searchBar')"></input>
-        </div>
-      </div>
-    </div>
-    <!-- 搜索框 -->
-
-    <!-- 筛选 -->
-    <div class="search-filter">
-      <ul class="search-filter-list">
-        <li class="search-filter-item active more-sort">销量</li>
-        <li class="search-filter-item">价格</li>
-        <li class="search-filter-item">筛选</li>
-      </ul>
-    </div>
-    <!-- 筛选 -->
-
-    <!-- 搜索内容 -->
-    <div class="content">
-      <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="searchParams"
-          ref="searchRusultloadMore">
-        <ul class="product-list" >
-          <li class="prod-item" v-for="(item,index) in searchRusultData" :key="index" @click="()=>$router.push('/product/'+item.productNo)">
-            <img :src="item.image_url[0].url" alt="">
-            <div class="prod-info">
-              <p class="prod-title">{{item.productName}}</p>
-              <p class="prod-price"><span>&yen;</span><strong>{{item.price}}</strong></p>
-              <p class="prod-pro">999条评价</p>
+    <div style="position:relative;">
+        <div class="search-rusult-container" v-if="!searchVisiblie">
+            <!-- 搜索框 -->
+            <div class="search-top">
+                <i class="ye-icon-category" @click="$router.go(-1)"></i>
+                <div class="searchInput">
+                    <div class="search-box">
+                        <i class="searchIcon searchContentIcon"></i>
+                        <input placeholder="搜索商品、分类" @click="()=>searchVisiblie=true"></input>
+                    </div>
+                </div>
             </div>
-          </li>
-        </ul>
-      </load-more>
+            <!-- 搜索框 -->
+
+            <!-- 筛选 -->
+            <div class="search-filter">
+                <ul class="search-filter-list">
+                    <li class="search-filter-item active more-sort">销量</li>
+                    <li class="search-filter-item">价格</li>
+                    <li class="search-filter-item">筛选</li>
+                </ul>
+            </div>
+            <!-- 筛选 -->
+
+            <!-- 搜索内容 -->
+            <div class="content">
+                <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="searchParams"
+                           ref="searchRusultloadMore">
+                    <ul class="product-list">
+                        <li class="prod-item" v-for="(item,index) in searchRusultData" :key="index"
+                            @click="()=>$router.push('/product/'+item.productNo)">
+                            <img :src="item.image_url[0].url" alt="">
+                            <div class="prod-info">
+                                <p class="prod-title">{{item.productName}}</p>
+                                <p class="prod-price"><span>&yen;</span><strong>{{item.price}}</strong></p>
+                            </div>
+                        </li>
+                    </ul>
+                </load-more>
+            </div>
+            <!-- 搜索内容 -->
+            <BackHead/>
+        </div>
+        <SearchProduct :searchVisiblie="searchVisiblie" @cancel="()=>searchVisiblie=false"/>
     </div>
-    <!-- 搜索内容 -->
-  <BackHead/>
-  </div>
 </template>
 
 <script>
-  import BackHead from 'common/backHead';
-  import LoadMore  from 'common/loadMore';
-  import {
-    searchGoods
-  } from '@/service/getData'
-  export default {
-    data() {
-      return {
-        searchRusultData: [],
-        commad: searchGoods,
-        searchParams: {
-          Keyword: '',
-          pageSize: 10,
-          pageIndex: 1
+    import BackHead from 'common/backHead';
+    import LoadMore from 'common/loadMore';
+    import SearchProduct from 'page/shop/searchProduct';
+    import {
+        searchGoods
+    } from '@/service/getData'
+
+    export default {
+        data() {
+            return {
+                searchVisiblie: false,
+                searchRusultData: [],
+                commad: searchGoods,
+                searchParams: {
+                    Keyword: '',
+                    pageSize: 10,
+                    pageIndex: 1
+                }
+            };
+        },
+
+        watch: {
+            'searchParams.Keyword': function (val) {
+                this.searchRusult()
+            }
+        },
+
+        components: {
+            BackHead,
+            SearchProduct,
+            LoadMore
+        },
+
+        computed: {},
+
+        methods: {
+            async searchRusult() {
+                this.searchParams.pageSize = 10;
+                this.searchParams.pageIndex = 1;
+                this.searchParams = JSON.parse(JSON.stringify(Object.assign(this.searchParams, this.$route.query)))
+                this.$refs.searchRusultloadMore.onloadMoreScroll();
+            },
+            async infiniteCallback(response) { //下拉加载
+                if (response.Data.length > 0) {
+                    let baseUrl = "http://yangs2.tunnel.qydev.com/src/assets/test/img";
+                    var j = 0;
+                    response.Data.map(i => {
+                        j++;
+                        if (i.image_url[0]) {
+                            if (j % 2 == 0) {
+                                i.productName = "飞天茅台 53°酱香型 500ml";
+                                i.image_url[0].url = baseUrl + "/product01.jpg";
+                            } else {
+                                i.productName = "洋河蓝色经典·梦之蓝 M3  52° 绵柔型 500ml";
+                                i.image_url[0].url = baseUrl + "/product02.jpg";
+                            }
+                            this.searchRusultData.push(i)
+                        }
+                    })
+                }
+            },
+        },
+
+        mounted: function () {
+            this.searchParams = JSON.parse(JSON.stringify(Object.assign(this.searchParams, this.$route.query)))
+            this.$refs.searchRusultloadMore.onloadMoreScroll();
         }
-      };
-    },
-
-    watch: {
-      'searchParams.Keyword': function(val){
-        this.searchRusult()
-      }
-    },
-
-    components: {
-      BackHead,
-      LoadMore
-    },
-
-    computed: {},
-
-    methods: {
-      async searchRusult() {
-        this.searchParams.pageSize = 10;
-        this.searchParams.pageIndex = 1;
-        this.searchParams = JSON.parse(JSON.stringify(Object.assign(this.searchParams,this.$route.query)))
-        this.$refs.searchRusultloadMore.onloadMoreScroll();
-      },
-      async infiniteCallback(response) { //下拉加载
-        if (response.Data.length > 0) {
-          response.Data.map(i => {
-            this.searchRusultData.push(i)
-          })
-        }
-      },
-    },
-
-    mounted: function () {
-      this.searchParams = JSON.parse(JSON.stringify(Object.assign(this.searchParams,this.$route.query)))
-      this.$refs.searchRusultloadMore.onloadMoreScroll();
     }
-  }
 
 </script>

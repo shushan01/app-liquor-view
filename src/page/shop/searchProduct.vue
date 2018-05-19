@@ -196,7 +196,7 @@
                             <span class="clear" @click="Keyword=''" v-show="Keyword.length>0">&times;</span>
                         </div>
                     </div>
-                    <span @click="()=>{Keyword='';this.$emit('cancel',false);}">取消</span>
+                    <span @click="()=>{Keyword='';this.$emit('cancel');}">取消</span>
                 </div>
                 <load-more v-show="Keyword.length<=0" style="width:100%;height:100%;background:#fff;">
                     <div class="search-hot">

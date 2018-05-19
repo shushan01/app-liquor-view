@@ -470,7 +470,7 @@
             <!-- banner -->
             <!-- tabBanner -->
             <div class="appTabscenter">
-                <mt-swipe :speed="200" :continuous="false" :stopPropagation="false" :prevent="true" :auto="0">
+                <mt-swipe :speed="200" :continuous="false" :stopPropagation="false" :prevent="false" :auto="0">
                     <mt-swipe-item>
                         <ul class="tableTabs">
                             <li class="table-tabs-item">

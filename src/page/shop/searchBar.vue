@@ -315,7 +315,7 @@
                 </div>
             </slot>
         </div>
-        <SearchProduct :searchVisiblie="searchVisiblie" v-on:cancel="cancel($event)"/>
+        <SearchProduct :searchVisiblie="searchVisiblie" @cancel="()=>searchVisiblie=false"/>
     </div>
 </template>
 
@@ -395,9 +395,6 @@
                 } catch (err) {
                 }
             },
-            cancel(res) {
-                this.searchVisiblie = res;
-            }
 
         },
 
