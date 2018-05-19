@@ -12,6 +12,12 @@
             padding: 10px 20px;
             background: #fff;
             border-bottom: 1px solid #eee;
+            .back-icon{
+                width: 23px;
+                height: 23px;
+                background: url('~jd/images/arrow-left.png') no-repeat;
+                background-size: 100%;
+            }
             .searchInput {
                 width: 90%;
                 .search-box {
@@ -139,7 +145,7 @@
         <div class="search-rusult-container" v-if="!searchVisiblie">
             <!-- 搜索框 -->
             <div class="search-top">
-                <i class="ye-icon-category" @click="$router.go(-1)"></i>
+                <i class="back-icon" @click="$router.go(-1)"></i>
                 <div class="searchInput">
                     <div class="search-box">
                         <i class="searchIcon searchContentIcon"></i>
@@ -232,6 +238,7 @@
                     response.Data.map(i => {
                         j++;
                         if (i.image_url[0]) {
+                            i.productNo = "963652948422340";
                             if (j % 2 == 0) {
                                 i.productName = "飞天茅台 53°酱香型 500ml";
                                 i.image_url[0].url = baseUrl + "/product01.jpg";
