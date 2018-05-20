@@ -191,7 +191,7 @@
 <script>
     import BackHead from 'common/backHead';
     import LoadMore from 'common/loadMore';
-    import SearchProduct from 'page/shop/searchProduct';
+    import SearchProduct from 'common/searchProduct';
     import {
         searchGoods
     } from '@/service/getData'

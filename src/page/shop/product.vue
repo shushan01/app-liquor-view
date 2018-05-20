@@ -25,6 +25,38 @@
                     background-size: 100%;
                 }
             }
+            .product-tabs {
+                margin-left: 30px;
+                height: 100%;
+                @include flexbox(space-between,
+                        center,
+                        row,
+                        nowrap);
+                position: relative;
+                #loadingbar {
+                    position: absolute;
+                    transition: .4s;
+                    width: calc((100% / 3));
+                    background: #000;
+                    bottom: -1px;
+                    height: 2px;
+                }
+                .product-tabs-item {
+                    width: 50%;
+                    @include flexbox(center,
+                            center,
+                            row,
+                            nowrap);
+                    flex: initial;
+                    text-align: center;
+                    color: #333;
+                    font-size: $subtitle;
+                    height: 100%;
+                    &.active {
+                        font-size: $title;
+                    }
+                }
+            }
         }
     }
 
@@ -368,6 +400,14 @@
                 }
             }
         }
+
+        .count-container {
+            padding: $padding;
+            background-color: #fff;
+            margin-top: 5px;
+            font-size: 16px;
+            font-weight: 700;
+        }
     }
 
     /* 商品 */
@@ -388,7 +428,7 @@
                 row,
                 nowrap);
         .left {
-            width: 30%;
+            width: 35%;
             height: 100%;
             @include flexbox(space-between,
                     center,
@@ -433,7 +473,7 @@
             }
         }
         .center {
-            width: 35%;
+            width: 30%;
             height: 100%;
             background: #FF9933;
             color: #fff;
@@ -459,7 +499,6 @@
     }
 
     /* 底部导航栏 */
-
 </style>
 <style lang="scss">
     #prodContent-container {
@@ -484,11 +523,19 @@
                 <div class="goback" @click="$router.go(-1)">
                     <i class="back"></i>
                 </div>
+                <div class="product-tabs">
+                    <span @click="switchTabs('mainLayout')"
+                          :class="['product-tabs-item',containerTab==='mainLayout'?'active':'']">商品</span>
+                    <span @click="switchTabs('goodDetail')"
+                          :class="['product-tabs-item',containerTab==='goodDetail'?'active':'']">详情</span>
+                    <div id="loadingbar"
+                         :style="containerTab==='mainLayout' ? 'left:7%' : 'left:58%'"></div>
+                </div>
             </div>
         </div>
         <!-- 顶部导航栏 -->
         <!-- 内容区 -->
-        <mt-tab-container v-model="containerTab" :swipeable="true" style="margin: 1.25rem 0;">
+        <mt-tab-container v-model="containerTab" :swipeable="true" style="margin: 1.25rem 0 0 0;">
             <!-- 商品 -->
             <mt-tab-container-item id="mainLayout" v-if="containerTab==='mainLayout'">
                 <div id="mainLayout">
@@ -513,8 +560,20 @@
                         </div>
                     </div>
 
+                    <div class="count-container">
+                        数量：
+                        <Counter></Counter>
+                    </div>
+
                 </div>
             </mt-tab-container-item>
+            <!-- 商品详情 -->
+            <mt-tab-container-item id="goodDetail">
+                <div id="goodDetail">
+
+                </div>
+            </mt-tab-container-item>
+            <!-- 商品详情 -->
             <!-- 商品 -->
         </mt-tab-container>
         <!-- 内容区 -->
@@ -549,6 +608,7 @@
         getShop
     } from '@/service/getData'
     import BackHead from 'common/backHead';
+    import Counter from 'common/counter';
 
     export default {
         data() {
@@ -572,6 +632,7 @@
         components: {
             Swipe,
             SwipeItem,
+            Counter,
             BackHead
         },
 
@@ -585,11 +646,6 @@
                     case 'mainLayout':
                         break;
                     case 'goodDetail':
-                        break;
-                    case 'goodcommentList':
-                        setTimeout(() => {
-                            this.$refs.commentLoadmore.onTopLoaded(this.$refs.commentLoadmore.uuid);
-                        }, 500)
                         break;
                     default: //其他
                         throw new Error('未知TabId')

@@ -328,7 +328,7 @@
         setLocalStorage
     } from '@/utils/mixin'
     import LoadMore from 'common/loadMore';
-    import SearchProduct from 'page/shop/searchProduct';
+    import SearchProduct from 'common/searchProduct';
 
     export default {
         data() {
