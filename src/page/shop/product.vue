@@ -470,6 +470,21 @@
                     background-position: 0 -21px;
                     background-size: 100px 100px;
                 }
+                .counter {
+                    width: 18px;
+                    height: 18px;
+                    position: absolute;
+                    background-color: #ff3300;
+                    border-radius: 9px;
+                    left: 18%;
+                    top: -3px;
+                    span {
+                        left: 32%;
+                        position: absolute;
+                        color: #fff;
+                        font-size: 14px;
+                    }
+                }
             }
         }
         .center {
@@ -583,10 +598,15 @@
             <div class="left">
                 <div class="shopping-cart" @click="$router.push('/cart')">
                     <i></i>
-                    <span>购物车</span>
+                    <span>购物车
+                    <span class="counter">
+                        <span>{{shopCount}}</span>
+                    </span>
+                    </span>
+
                 </div>
             </div>
-            <div class="center" @click="addShopCart">加入购物车</div>
+            <div class="center" @click="addShopCart($event)">加入购物车</div>
             <div class="right" @click="addShopCart">立即购买</div>
         </div>
         <!-- 底部导航栏 -->
@@ -613,6 +633,7 @@
     export default {
         data() {
             return {
+                shopCount: 0,
                 containerTab: 'mainLayout',
                 productInfo: {},
                 swipeIndex: {
@@ -655,7 +676,7 @@
             handleChange(index) {
                 this.swipeIndex.nowIndex = index + 1;
             },
-            async addShopCart() { //加入购物车
+            async addShopCart(event) { //加入购物车
                 let SelectedList = [{
                     ProductNo: this.productInfo.productNo
                 }];
