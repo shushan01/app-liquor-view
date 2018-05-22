@@ -464,28 +464,6 @@
                     }
                 }
             }
-            .shopping-cart {
-                i {
-                    background: url('~jd/images/cart_sprits_all.png') no-repeat;
-                    background-position: 0 -21px;
-                    background-size: 100px 100px;
-                }
-                .counter {
-                    width: 18px;
-                    height: 18px;
-                    position: absolute;
-                    background-color: #ff3300;
-                    border-radius: 9px;
-                    left: 18%;
-                    top: -3px;
-                    span {
-                        left: 32%;
-                        position: absolute;
-                        color: #fff;
-                        font-size: 14px;
-                    }
-                }
-            }
         }
         .center {
             width: 30%;
@@ -597,16 +575,10 @@
         <div class="cart-concern-fixed">
             <div class="left">
                 <div class="shopping-cart" @click="$router.push('/cart')">
-                    <i></i>
-                    <span>购物车
-                    <span class="counter">
-                        <span>{{shopCount}}</span>
-                    </span>
-                    </span>
-
+                    <ShopCart ref="cart" :shopCount="shopCount"></ShopCart>
                 </div>
             </div>
-            <div class="center" @click="addShopCart($event)">加入购物车</div>
+            <div class="center" @click="addShopCart">加入购物车</div>
             <div class="right" @click="addShopCart">立即购买</div>
         </div>
         <!-- 底部导航栏 -->
@@ -629,11 +601,12 @@
     } from '@/service/getData'
     import BackHead from 'common/backHead';
     import Counter from 'common/counter';
+    import ShopCart from 'common/shopCart';
 
     export default {
         data() {
             return {
-                shopCount: 0,
+                shopCount: 5,
                 containerTab: 'mainLayout',
                 productInfo: {},
                 swipeIndex: {
@@ -654,6 +627,7 @@
             Swipe,
             SwipeItem,
             Counter,
+            ShopCart,
             BackHead
         },
 
@@ -676,19 +650,9 @@
             handleChange(index) {
                 this.swipeIndex.nowIndex = index + 1;
             },
-            async addShopCart(event) { //加入购物车
-                let SelectedList = [{
-                    ProductNo: this.productInfo.productNo
-                }];
-                this.$store.dispatch('SelectProduct', {
-                    SelectedList: JSON.stringify(SelectedList),
-                    Increment: 1
-                }).then(response => {
-                    return Toast({
-                        message: '加入购物车成功',
-                        position: 'bottom'
-                    })
-                })
+            async addShopCart(target) { //加入购物车
+                this.$refs.cart.drop(target);
+                this.shopCount++;
             },
             async initData() {
                 this.commentParam.ProductNo = this.$route.params.id;
