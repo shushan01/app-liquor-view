@@ -49,6 +49,12 @@
                 dropBalls: []
             }
         },
+        props: {
+            getPosition: {
+                default: true,
+                type: Boolean
+            }
+        },
         methods: {
             drop(target) {
                 for (var i = 0; i < this.balls.length; i++) {
@@ -66,9 +72,13 @@
                 while (count--) {
                     let ball = this.balls[count]
                     if (ball.show) {
-                        // let rect = ball.el // 获取小球的相对于视口的位移(小球高度)
+                        let rect = ball.el // 获取小球的相对于视口的位移(小球高度)
                         let x = 50
                         let y = -190 // 负数是从左上角往下的的方向, 正数是往上
+                        if (this.getPosition) {
+                            x = rect.clientX
+                            y = rect.clientY-window.innerHeight
+                        }
                         el.style.display = '' // 清空display
                         el.style.webkitTransform = `translate3d(0, ${y}px, 0)`
                         el.style.transform = `translate3d(0, ${y}px, 0)`

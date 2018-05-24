@@ -19,7 +19,7 @@
             background-color: #ff3300;
             border-radius: 9px;
             left: 18%;
-            top: -3px;
+            top: 3px;
             span {
                 left: 32%;
                 position: absolute;
@@ -33,12 +33,10 @@
 <template>
     <div class="shop-cart">
         <i></i>
-        <span>购物车
         <span class="counter">
         <span>{{shopCount}}</span>
         </span>
-        </span>
-        <ShopCartBalls ref="ball"></ShopCartBalls>
+        <ShopCartBalls ref="ball" :getPosition="false"></ShopCartBalls>
     </div>
 </template>
 

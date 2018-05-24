@@ -480,7 +480,7 @@
         .right {
             width: 35%;
             height: 100%;
-            background: $red;
+            background: #e4393c;
             color: #fff;
             font-size: $title;
             @include flexbox(center,
