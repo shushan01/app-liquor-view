@@ -16,6 +16,43 @@
 
     .Section {
         .goods {
+            .tips {
+                color: #fff;
+                padding: 5px;
+                width: 100%;
+                height: 90px;
+                background-color: #c30505;
+                .top {
+                    padding: 5px;
+                    font-size: 20px;
+                    font-weight: 700;
+                    border-bottom: 1px solid #fff;
+                    position: relative;
+                    span {
+                        color: #fff;
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                    }
+                }
+                .bottom {
+                    padding: 5px;
+                    font-size: 15px;
+                    position: relative;
+                    .switch {
+                        position: absolute;
+                        bottom: -20px;
+                        right: 0;
+                        div {
+                            float: left;
+                            width: 16px;
+                            height: 16px;
+                            border: 1px solid #fff;
+                        }
+                    }
+                }
+            }
+            margin-top: 10px;
             @include flexbox(flex-start, space-between, column, wrap);
             background: linear-gradient(180deg, #fff, #efefef);
             .store-pd {
@@ -137,8 +174,49 @@
                                 }
                             }
                         }
+                        .del-product{
+                            margin-top: 10px;
+                            @include flexbox(space-between, center, row, nowrap);
+                        }
                     }
                 }
+            }
+        }
+        .cart-null {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 16px;
+            color: #999;
+            .cart-icon {
+                display: inline-block;
+                width: 20%;
+                background: #ced0d1;
+                font-size: 12px;
+                position: relative;
+                border-radius: 50%;
+                vertical-align: middle;
+                &:before {
+                    content: "";
+                    display: inline-block;
+                    padding-bottom: 100%;
+                    width: .1px;
+                    vertical-align: middle;
+                }
+                .ye-icon-cart {
+                    margin: 0 auto;
+                    vertical-align: middle;
+                    color: #fff;
+                    font-size: 40px;
+                }
+            }
+            p {
+                padding: 5px 0;
+            }
+            .go-shop {
+                background: #e4393c;
+                width: 30%;
+                height: 40px;
+                border-radius: 3px;
             }
         }
     }
@@ -159,7 +237,7 @@
             font-size: 12px;
             height: 100%;
             padding: 10px;
-            width: 70%;
+            width: 50%;
             @include flexbox(flex-start, center, row, nowrap);
             flex: initial;
             font-size: 13px;
@@ -174,8 +252,16 @@
                 @include textoverflow(1);
             }
         }
+        .center {
+            width: 25%;
+            height: 100%;
+            color: #fff;
+            font-size: 17px;
+            background: #FF9933;
+            @include flexbox(center, center, row, nowrap);
+        }
         .right {
-            width: 30%;
+            width: 25%;
             height: 100%;
             background: #e4393c;
             color: #fff;
@@ -202,10 +288,24 @@
                        :loadMoreIconVisible="false"
                        ref="cartLoadmore">
                 <div class="goods">
+                    <div class="tips" v-if="tipsVis">
+                        <div class="top">
+                            结算后会存入您的酒柜
+                            <span class="ye-icon-close" @click="cancelTips"></span>
+                        </div>
+                        <div class="bottom">
+                            把酒存入酒柜，随时随地提货、送礼、赞助酒局~
+                            <div class="switch" @click="switchMethod">
+                                <div>{{switchValue}}</div>
+                                不再提示
+                            </div>
+                        </div>
+                    </div>
                     <div class="store-pd" v-if="cartList">
-                        <div class="store-pd-item" v-for="(item,index) in cartList" :key="index">
+                        <div class="store-pd-item" v-for="(item,index) in cartList" :key="index"
+                             @click="()=>$router.push('/product/'+item.product.productNo)">
                             <i :class="['select-default-icon',item.checked ? 'select-icon' : '']"
-                               @click="checked(item)"></i>
+                               @click.stop="checked(item)"></i>
                             <div class="pd-images">
                                 <img :src="item.product.image_url[0].url" alt="">
                             </div>
@@ -222,26 +322,38 @@
                                         <strong>{{item.product.price}}</strong>
                                     </div>
                                     <div class="right">
-                                        <div class="cut" @click="editProductNum({item:item,increment:-1})"></div>
+                                        <div class="cut" @click.stop="editProductNum({item:item,increment:-1})"></div>
                                         <input type="text" v-model="item.counter" class="num-inp"
                                                @change="editProductNum({item:item,counter:item.counter})"></input>
-                                        <div class="add" @click="editProductNum({item:item,increment:1})"></div>
+                                        <div class="add" @click.stop="editProductNum({item:item,increment:1})"></div>
                                     </div>
                                 </div>
+                                <div class="del-product">88888</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <p v-if="!cartList || cartList == ''"
-                   style="margin-top:50px;padding: 15px 0;text-align:center;font-size:16px;color:#999;">购物车是空的</p>
+                <div class="cart-null" v-if="!cartList || cartList == ''">
+                    <div class="cart-icon"><i class="ye-icon-cart"></i></div>
+                    <p>
+                        购物车还是空的
+                    </p>
+                    <p>
+                        去挑几款好酒犒劳自己或者礼赠亲朋吧~
+                    </p>
+                    <mt-button type="danger" @click="$router.push(`/productList`)">选择商品</mt-button>
+                </div>
             </load-more>
         </div>
         <!-- 购物车列表 -->
         <!-- 底部价格计算 -->
-        <div class="section-bar">
+        <div class="section-bar" v-if="cartList">
             <div class="left">
                 <i :class="['select-default-icon',selectedAll ? 'select-icon' : '']" @click="selectedAllGoods"></i>全选
                 <strong>合计：&yen;{{totalFee}}</strong>
+            </div>
+            <div class="center" @click="emptyCart">
+                清空
             </div>
             <div class="right" @click="confirmOrder">
                 <strong>去结算
@@ -257,11 +369,14 @@
 <script>
     import FooterView from 'component/footer/footerView';
     import {
-        Toast
+        Toast,
+        Button
     } from 'mint-ui'
     import {
         setSessionStorage,
         getSessionStorage,
+        getLocalStorage,
+        setLocalStorage,
         removeSessionStorage
     } from '@/utils/mixin';
     import {
@@ -273,6 +388,8 @@
     export default {
         data() {
             return {
+                tipsVis: true,
+                switchValue: "",
                 cartList: null,
                 totalFee: 0,
                 selectedCounter: 0,
@@ -297,9 +414,7 @@
         methods: {
             selectedAllGoods() {
                 this.cartList.map(item => {
-                    if (item.status === 1) {
-                        item.checked = !this.selectedAll
-                    }
+                    item.checked = !this.selectedAll
                 })
                 this.selectedAll = !this.selectedAll;
                 this.computedTotalFee();
@@ -307,7 +422,7 @@
             confirmOrder() {
                 let SelectedList = [];
                 this.cartList.map(item => {
-                    if (item.status === 1 && item.checked) {
+                    if (item.checked) {
                         SelectedList.push(item.product.productNo)
                     }
                 })
@@ -315,17 +430,18 @@
                     message: '请选择商品',
                     position: 'bottom'
                 });
-                this.$store.dispatch('ConfirmSelectProduct', {
+                /*this.$store.dispatch('ConfirmSelectProduct', {
                     SelectedList: JSON.stringify(SelectedList)
                 }).then(response => {
                     this.$router.push('/createOrder');
-                })
+                })*/
+                this.$router.push('/createOrder');
             },
             computedTotalFee() {
                 let computedFee = 0,
                     selectedCounter = 0;
                 this.cartList.map(item => {
-                    if (item.checked && item.status === 1) {
+                    if (item.checked) {
                         computedFee += parseFloat(item.counter * item.product.price)
                         selectedCounter++
                     }
@@ -334,11 +450,7 @@
                 this.selectedAll = selectedCounter === this.cartList.length ? true : false;
                 this.totalFee = computedFee.toFixed(2);
             },
-            async editProductNum({
-                                     item,
-                                     increment,
-                                     counter
-                                 }) {
+            async editProductNum({item, increment, counter}) {
                 let params = {
                     SelectedList: JSON.stringify([{
                         ProductNo: item.product.productNo
@@ -349,14 +461,14 @@
                 } else {
                     params.Increment = increment
                 }
-                await this.$store.dispatch('SelectProduct', params)
+                // await this.$store.dispatch('SelectProduct', params)
                 this.onRefreshCallback();
             },
             async checked(item) {
                 item.checked = !item.checked;
                 let count = 0;
                 this.cartList.map(item => {
-                    if (item.status === 1 && item.checked) return count++;
+                    if (item.checked) return count++;
                 })
                 if (count === this.cartList.length) return this.selectedAllGoods();
                 this.computedTotalFee();
@@ -366,26 +478,71 @@
                 //   Data
                 // } = await this.$store.dispatch('GetSelectedProductList');
                 let Data = {};
-                this.cartList = Data || null;
+                this.cartList = [{
+                    product: {
+                        image_url: [{
+                            url: "http://yangs2.tunnel.qydev.com/src/assets/test/img/product01.jpg"
+                        }],
+                        productName: "飞天茅台 53°酱香型 500ml",
+                        summary: "香醇可口",
+                        price: 998,
+                        productNo: 963652948422340
+                    },
+                    counter: 2
+                },
+                    {
+                        product: {
+                            image_url: [{
+                                url: "http://yangs2.tunnel.qydev.com/src/assets/test/img/product02.jpg"
+                            }],
+                            productName: "洋河蓝色经典·梦之蓝 M3  52° 绵柔型 500ml",
+                            summary: "海之蓝",
+                            price: 668,
+                            productNo: 963652948422340
+                        },
+                        counter: 1
+                    }
+                ];
             },
             async onRefreshCallback() {
-                this.$store.dispatch('GetSelectedProductList').then(response => {
-                    setTimeout(() => {
-                        this.cartList = response.Data;
-                        this.computedTotalFee();
-                        this.selectedAll = false;
-                        this.$refs.cartLoadmore.onTopLoaded(this.$refs.cartLoadmore.uuid);
-                    }, 500);
-                }, error => {
-                    this.$refs.cartLoadmore.translate = 0;
-                    this.$refs.cartLoadmore.topStatus = 'pull';
-                    this.$refs.cartLoadmore.AllLoaded = false;
-                    return this.$refs.cartLoadmore.LoadMoreLoading = false;
-                });
+                /* this.$store.dispatch('GetSelectedProductList').then(response => {
+                     setTimeout(() => {
+                         this.cartList = response.Data;
+                         this.computedTotalFee();
+                         this.selectedAll = false;
+                         this.$refs.cartLoadmore.onTopLoaded(this.$refs.cartLoadmore.uuid);
+                     }, 500);
+                 }, error => {
+                     this.$refs.cartLoadmore.translate = 0;
+                     this.$refs.cartLoadmore.topStatus = 'pull';
+                     this.$refs.cartLoadmore.AllLoaded = false;
+                     return this.$refs.cartLoadmore.LoadMoreLoading = false;
+                 });*/
+                this.$refs.cartLoadmore.translate = 0;
+                this.$refs.cartLoadmore.topStatus = 'pull';
+                this.$refs.cartLoadmore.AllLoaded = false;
+                return this.$refs.cartLoadmore.LoadMoreLoading = false;
             },
+            switchMethod() {
+                this.switchValue = (this.switchValue ? "" : "√");
+            },
+            cancelTips() {
+                this.tipsVis = false;
+                if (this.switchValue) {
+                    setLocalStorage("tipsVis", "false");
+                } else {
+                    setLocalStorage("tipsVis", "true");
+                }
+            },
+            async emptyCart() {
+                this.cartList = null;
+                setLocalStorage("cart-count", "0");
+            }
         },
         mounted: function () {
             this.initData();
+            let tipsVis = getLocalStorage("tipsVis");
+            this.tipsVis = (tipsVis == "false" ? false : true);
         }
     }
 </script>

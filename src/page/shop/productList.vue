@@ -277,6 +277,10 @@
     import SearchProduct from 'common/searchProduct';
     import ShopCartBalls from 'common/shopCartBalls';
     import {
+        getLocalStorage,
+        setLocalStorage
+    } from '@/utils/mixin';
+    import {
         searchGoods
     } from '@/service/getData'
 
@@ -298,6 +302,9 @@
         watch: {
             'searchParams.Keyword': function (val) {
                 this.searchRusult()
+            },
+            '$route.params': function () {
+                this.setCount()
             }
         },
 
@@ -340,12 +347,20 @@
             async addShopCart(target) { //加入购物车
                 this.$refs.ball.drop(target);
                 this.shopCount++;
+                setLocalStorage("cart-count", this.shopCount + "");
             },
+            async setCount() {
+                let count = getLocalStorage("cart-count");
+                if (count) {
+                    this.shopCount = parseInt(count);
+                }
+            }
         },
 
         mounted: function () {
             this.searchParams = JSON.parse(JSON.stringify(Object.assign(this.searchParams, this.$route.query)))
             this.$refs.searchRusultloadMore.onloadMoreScroll();
+            this.setCount();
         }
     }
 

@@ -555,7 +555,7 @@
 
                     <div class="count-container">
                         数量：
-                        <Counter></Counter>
+                        <Counter ref="count"></Counter>
                     </div>
 
                 </div>
@@ -579,7 +579,7 @@
                 </div>
             </div>
             <div class="center" @click="addShopCart">加入购物车</div>
-            <div class="right" @click="addShopCart">立即购买</div>
+            <div class="right" @click="$router.push('/createOrder');">立即购买</div>
         </div>
         <!-- 底部导航栏 -->
 
@@ -599,6 +599,10 @@
         getProduct,
         getShop
     } from '@/service/getData'
+    import {
+        getLocalStorage,
+        setLocalStorage
+    } from '@/utils/mixin';
     import BackHead from 'common/backHead';
     import Counter from 'common/counter';
     import ShopCart from 'common/shopCart';
@@ -606,7 +610,7 @@
     export default {
         data() {
             return {
-                shopCount: 5,
+                shopCount: 0,
                 containerTab: 'mainLayout',
                 productInfo: {},
                 swipeIndex: {
@@ -621,7 +625,11 @@
             };
         },
 
-        watch: {},
+        watch: {
+            '$route.params': function () {
+                this.setCount()
+            }
+        },
 
         components: {
             Swipe,
@@ -652,9 +660,13 @@
             },
             async addShopCart(target) { //加入购物车
                 this.$refs.cart.drop(target);
-                this.shopCount++;
+
+                let count = getLocalStorage("cart-count");
+                this.shopCount = parseInt(count) + this.$refs.count.number;
+                setLocalStorage("cart-count", this.shopCount + "");
             },
             async initData() {
+                this.setCount();
                 this.commentParam.ProductNo = this.$route.params.id;
                 let {
                     Data
@@ -668,6 +680,12 @@
                 Data.image_url[1].url = baseUrl + "/product02.jpg";
                 this.productInfo = Data;
                 this.swipeIndex.total = Data.image_url.length;
+            },
+            async setCount() {
+                let count = getLocalStorage("cart-count");
+                if (count) {
+                    this.shopCount = parseInt(count);
+                }
             }
         },
 
