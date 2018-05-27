@@ -82,6 +82,17 @@
                             @include textoverflow(2); // width: 90%;
                             font-size: 13px;
                             color: #333;
+                            p{
+                                .product-name{
+                                    padding-right: 15px;
+                                }
+                                position: relative;
+                            }
+                            .ye-icon-close{
+                                position: absolute;
+                                right: 0px;
+                                top: 0px;
+                            }
                         }
                         .pd-sku {
                             @include textoverflow(1);
@@ -174,7 +185,7 @@
                                 }
                             }
                         }
-                        .del-product{
+                        .del-product {
                             margin-top: 10px;
                             @include flexbox(space-between, center, row, nowrap);
                         }
@@ -301,7 +312,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="store-pd" v-if="cartList">
+                    <div class="store-pd" v-if="cartList&&cartList.length!=0">
                         <div class="store-pd-item" v-for="(item,index) in cartList" :key="index"
                              @click="()=>$router.push('/product/'+item.product.productNo)">
                             <i :class="['select-default-icon',item.checked ? 'select-icon' : '']"
@@ -311,7 +322,7 @@
                             </div>
                             <div class="pd-info">
                                 <div class="pd-title">
-                                    <p>{{item.product.productName}}</p>
+                                    <p><span class="product-name">{{item.product.productName}}</span><span class="ye-icon-close" @click.stop="delCart(item.product.id)"></span></p>
                                 </div>
                                 <div class="pd-sku">
                                     <p class="sku-info">{{item.product.summary}}</p>
@@ -328,7 +339,6 @@
                                         <div class="add" @click.stop="editProductNum({item:item,increment:1})"></div>
                                     </div>
                                 </div>
-                                <div class="del-product">88888</div>
                             </div>
                         </div>
                     </div>
@@ -347,7 +357,7 @@
         </div>
         <!-- 购物车列表 -->
         <!-- 底部价格计算 -->
-        <div class="section-bar" v-if="cartList">
+        <div class="section-bar" v-if="cartList&&cartList.length!=0">
             <div class="left">
                 <i :class="['select-default-icon',selectedAll ? 'select-icon' : '']" @click="selectedAllGoods"></i>全选
                 <strong>合计：&yen;{{totalFee}}</strong>
@@ -486,7 +496,8 @@
                         productName: "飞天茅台 53°酱香型 500ml",
                         summary: "香醇可口",
                         price: 998,
-                        productNo: 963652948422340
+                        productNo: 963652948422340,
+                        id:1
                     },
                     counter: 2
                 },
@@ -498,7 +509,8 @@
                             productName: "洋河蓝色经典·梦之蓝 M3  52° 绵柔型 500ml",
                             summary: "海之蓝",
                             price: 668,
-                            productNo: 963652948422340
+                            productNo: 963652948422340,
+                            id:2
                         },
                         counter: 1
                     }
@@ -537,6 +549,15 @@
             async emptyCart() {
                 this.cartList = null;
                 setLocalStorage("cart-count", "0");
+            },
+            async delCart(productId) {
+                let newCartList = [];
+                this.cartList.map(item => {
+                    if (item.product.id!=productId){
+                        newCartList.push(item);
+                    };
+                })
+                this.cartList = newCartList;
             }
         },
         mounted: function () {

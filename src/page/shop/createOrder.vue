@@ -246,6 +246,9 @@
                 this.confirmSelectedProduct = confirmSelectedProduct;
             },
             async submitOrder() {
+                Toast({
+                    message: '未开发'
+                })
             },
         },
 
@@ -255,7 +258,3 @@
     }
 
 </script>
-<style lang="scss" scoped>
-
-
-</style>
