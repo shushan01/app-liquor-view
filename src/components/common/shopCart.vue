@@ -13,19 +13,9 @@
             margin-left: 5px;
         }
         .counter {
-            width: 18px;
-            height: 18px;
             position: absolute;
-            background-color: #ff3300;
-            border-radius: 9px;
             left: 18%;
             top: 3px;
-            span {
-                left: 32%;
-                position: absolute;
-                color: #fff;
-                font-size: 14px;
-            }
         }
     }
 
@@ -34,7 +24,7 @@
     <div class="shop-cart">
         <i></i>
         <span class="counter">
-        <span>{{shopCount}}</span>
+        <mt-badge type="error" size="small">{{shopCount}}</mt-badge>
         </span>
         <ShopCartBalls ref="ball" :getPosition="false"></ShopCartBalls>
     </div>
@@ -42,6 +32,7 @@
 
 <script>
     import ShopCartBalls from 'common/shopCartBalls';
+    import {Badge} from 'mint-ui';
 
     export default {
         data() {

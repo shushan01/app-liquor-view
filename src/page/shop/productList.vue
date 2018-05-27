@@ -178,20 +178,9 @@
                     padding-left: 7%;
                 }
                 .product-counter {
-                    width: 18px;
-                    height: 18px;
                     position: absolute;
-                    background-color: #ff3300;
-                    border-radius: 9px;
                     left: 24%;
                     top: 0px;
-                    span {
-                        left: 4px;
-                        top: 1px;
-                        position: absolute;
-                        color: #fff;
-                        font-size: 14px;
-                    }
                 }
             }
             .product-shop-right {
@@ -260,7 +249,7 @@
             <div class="product-shop-left" @click="$router.push('/cart')">
                 <div class="ye-icon-cart"/>
                 <span class="product-counter">
-                    <span>{{shopCount}}</span>
+                    <mt-badge type="error" size="small">{{shopCount}}</mt-badge>
                 </span>
                 <ShopCartBalls ref="ball"></ShopCartBalls>
             </div>
@@ -276,6 +265,7 @@
     import LoadMore from 'common/loadMore';
     import SearchProduct from 'common/searchProduct';
     import ShopCartBalls from 'common/shopCartBalls';
+    import {Badge} from 'mint-ui';
     import {
         getLocalStorage,
         setLocalStorage
