@@ -11,7 +11,8 @@ import {
 } from '@/utils/mixin';
 class Http {
   constructor(){
-    this.Domain = 'https://awei.fun:3032';
+    // this.Domain = 'https://awei.fun:3032';
+      this.Domain = 'http://yangs3.tunnel.qydev.com';
   }
   require(options) {
     if (!options.api) throw new Error('api 不能为空');
@@ -40,18 +41,19 @@ class Http {
             data: options.param
         }).then(response => {
             Indicator.close();
-            if(response.data.Code === 0){ //请求成功
-                return resolve(response.data)
-            }else{
-                if(response.data.Code === 2){ //未登录
-                //   router.push('/Login')
-                }
-                Toast({
-                    message: response.data.Message,
-                    position: 'bottom'
-                });
-                return reject(response.data)
-            }
+            return resolve(response.data)
+            // if(response.data.Code === 0){ //请求成功
+            //     return resolve(response.data)
+            // }else{
+            //     if(response.data.Code === 2){ //未登录
+            //     //   router.push('/Login')
+            //     }
+            //     Toast({
+            //         message: response.data.Message,
+            //         position: 'bottom'
+            //     });
+            //     return reject(response.data)
+            // }
         },error => {
             Indicator.close();
             Toast({

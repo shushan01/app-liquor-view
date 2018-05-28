@@ -463,8 +463,8 @@
                   slot="refresh-spinner">更新中...</span>
             <!-- banner -->
             <mt-swipe :stopPropagation="true" :prevent="true" :auto="5000" class="banner">
-                <mt-swipe-item v-for="(item,index) in cmsData.cmsBanner.image_url" :key="index">
-                    <img :src="item.url" :alt="item.name">
+                <mt-swipe-item v-for="(item,index) in cmsData.cmsBanner" :key="index">
+                    <img :src="item">
                 </mt-swipe-item>
             </mt-swipe>
             <!-- banner -->
@@ -529,7 +529,7 @@
             <!-- 底部资讯 -->
             <div class="floor">
                 <div class="container-bg">
-                    <img src="~assets/test/img/floot.png" alt="">
+                    <img v-lazy.jd="cmsData.centerBanner" alt="">
                 </div>
             </div>
             <!-- 底部资讯 -->
@@ -540,8 +540,8 @@
                         <img class="jd-news-icon" src="~jd/images/jiuhua.png" alt="">
                     </router-link>
                     <marquee>
-                        <marquee-item v-for="(item,index) in cmsData.life" :key="index"
-                                      @click.native="">{{item.article_title}}
+                        <marquee-item v-for="(item,index) in cmsData.jiuhuas" :key="index"
+                                      @click.native="">{{item}}
                         </marquee-item>
                     </marquee>
                     <span>更多</span>
@@ -554,38 +554,16 @@
                 <div class="floor-title">
                     <img src="~jd/images/tuijian.png" alt="">
                 </div>
-                <div class="floor-container-bom" v-for="n in 2">
-                    <div class="f-c-b-prd-item">
+                <div class="floor-container-bom" v-for="(item,index) in cmsData.recommend" :key="index">
+                    <div class="f-c-b-prd-item" v-for="(item_su,index2) in item" :key="index2">
                         <div class="product-img">
                             <img @click=""
-                                 v-lazy.jd="cmsData.jd_tujia1.url"
+                                 v-lazy.jd="item_su.imgUrls[0]"
                                  alt="">
                         </div>
                         <div class="seckill-t">
-                            <p class="seckill-summary">{{cmsData.jd_tujia1.text}}</p>
-                            <p class="product-price">￥{{cmsData.jd_tujia1.price}}</p>
-                        </div>
-                    </div>
-                    <div class="f-c-b-prd-item">
-                        <div class="product-img">
-                            <img @click=""
-                                 v-lazy.jd="cmsData.jd_tujia2.url"
-                                 alt="">
-                        </div>
-                        <div class="seckill-t">
-                            <p class="seckill-summary">{{cmsData.jd_tujia2.text}}</p>
-                            <p class="product-price">￥{{cmsData.jd_tujia2.price}}</p>
-                        </div>
-                    </div>
-                    <div class="f-c-b-prd-item">
-                        <div class="product-img">
-                            <img @click=""
-                                 v-lazy.jd="cmsData.jd_tujia3.url"
-                                 alt="">
-                        </div>
-                        <div class="seckill-t">
-                            <p class="seckill-summary">{{cmsData.jd_tujia3.text}}</p>
-                            <p class="product-price">￥{{cmsData.jd_tujia3.price}}</p>
+                            <p class="seckill-summary">{{item_su.productName}}</p>
+                            <p class="product-price">￥{{item_su.price}}</p>
                         </div>
                     </div>
                 </div>
@@ -603,7 +581,7 @@
         showBack
     } from '@/utils/mixin';
     import {
-        getRecommend,
+        getIndexCmsData,
         getArticle,
         getArticleList,
         getGoodsCategoryList
@@ -626,7 +604,7 @@
         data() {
             return {
                 Status: false,
-                commad: getRecommend,
+                commad: getIndexCmsData,
                 recommendParam: {
                     Type: 'recommend',
                     pageSize: 10,
@@ -673,59 +651,7 @@
                 }
             },
             async updatedData() { //更新数据
-                let {
-                    Data
-                } = await this.$store.dispatch('GetIndexCmsData', {
-                    pageIndex: 1,
-                    pageSize: 100
-                });
-
-                //轮播图
-                let baseUrl = "http://yangs2.tunnel.qydev.com/src/assets/test/img";
-                let image_url = [];
-                let img1 = {};
-                img1.name = "img1";
-                img1.url = baseUrl + "/home04.jpg";
-                image_url.push(img1);
-                let img3 = {};
-                img3.name = "img3";
-                img3.url = baseUrl + "/home01.jpg";
-                image_url.push(img3);
-                let img4 = {};
-                img4.name = "img4";
-                img4.url = baseUrl + "/home03.jpg";
-                image_url.push(img4);
-                Data.cmsBanner.image_url = image_url;
-                //酒花
-                let jiuhuas = [];
-                let jiuhua1 = {};
-                jiuhua1.article_title = "【酒花】 5ml 体验贵州 53°酱香型";
-                let jiuhua2 = {};
-                jiuhua2.article_title = "【酒花】 5ml 经典海之蓝 53°酱香型";
-                jiuhuas.push(jiuhua2);
-                let jiuhua3 = {};
-                jiuhua3.article_title = "【酒花】 5ml 体验国标酱香 53°酱香型";
-                jiuhuas.push(jiuhua3);
-                let jiuhua4 = {};
-                jiuhua4.article_title = "【酒花】 5ml 飞天茅台 53°酱香型";
-                jiuhuas.push(jiuhua4);
-                Data.life = jiuhuas;
-                //推荐
-                let jd_tujia1 = {};
-                jd_tujia1.url = baseUrl + "/tuijian01.jpg";
-                jd_tujia1.text = "飞天茅台 53°";
-                jd_tujia1.price = 1599;
-                Data.jd_tujia1 = jd_tujia1;
-                let jd_tujia2 = {};
-                jd_tujia2.url = baseUrl + "/tuijian02.jpg";
-                jd_tujia2.text = "洋河蓝色·梦之蓝";
-                jd_tujia2.price = 899;
-                Data.jd_tujia2 = jd_tujia2;
-                let jd_tujia3 = {};
-                jd_tujia3.url = baseUrl + "/tuijian03.jpg";
-                jd_tujia3.text = "唐小姐 梅子酒";
-                jd_tujia3.price = 299;
-                Data.jd_tujia3 = jd_tujia3;
+                let Data = await this.$store.dispatch('GetIndexCmsData', {});
                 this.cmsData = Data;
             },
             async initData() { //初始化数据
