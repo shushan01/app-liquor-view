@@ -228,8 +228,8 @@
                            ref="searchRusultloadMore">
                     <ul class="product-list">
                         <li class="prod-item" v-for="(item,index) in searchRusultData" :key="index"
-                            @click="()=>$router.push('/product/'+item.productNo)">
-                            <img :src="item.image_url[0].url" alt="">
+                            @click="()=>$router.push('/product/'+item.id)">
+                            <img :src="item.imgUrls[0]" alt="">
                             <div class="prod-info">
                                 <p class="prod-title">{{item.productName}}</p>
                                 <p class="prod-price"><span>&yen;</span><strong>{{item.price}}</strong></p>
@@ -315,22 +315,9 @@
                 this.$refs.searchRusultloadMore.onloadMoreScroll();
             },
             async infiniteCallback(response) { //下拉加载
-                if (response.Data.length > 0) {
-                    let baseUrl = "http://yangs2.tunnel.qydev.com/src/assets/test/img";
-                    var j = 0;
-                    response.Data.map(i => {
-                        j++;
-                        if (i.image_url[0]) {
-                            i.productNo = "963652948422340";
-                            if (j % 2 == 0) {
-                                i.productName = "飞天茅台 53°酱香型 500ml";
-                                i.image_url[0].url = baseUrl + "/product01.jpg";
-                            } else {
-                                i.productName = "洋河蓝色经典·梦之蓝 M3  52° 绵柔型 500ml";
-                                i.image_url[0].url = baseUrl + "/product02.jpg";
-                            }
-                            this.searchRusultData.push(i)
-                        }
+                if (response.length > 0) {
+                    response.map(i => {
+                        this.searchRusultData.push(i)
                     })
                 }
             },

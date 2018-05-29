@@ -570,7 +570,7 @@
             </div>
             <!--  爱生活为您推荐 -->
         </load-more>
-        <FooterView/>
+        <FooterView ref="footer"/>
         <BackHead/>
     </div>
 </template>
@@ -578,7 +578,8 @@
     import FooterView from 'component/footer/footerView';
     import BackHead from 'common/backHead';
     import {
-        showBack
+        showBack,
+        setLocalStorage
     } from '@/utils/mixin';
     import {
         getIndexCmsData,
@@ -653,6 +654,9 @@
             async updatedData() { //更新数据
                 let Data = await this.$store.dispatch('GetIndexCmsData', {});
                 this.cmsData = Data;
+                //购物车数量
+                this.$refs.footer.shopCount = Data.cartCount;
+                setLocalStorage("cart-count", Data.cartCount + "");
             },
             async initData() { //初始化数据
                 if (!this.indexCmsData) {

@@ -257,7 +257,7 @@
             throw new Error('the commad is Error !')
           });
           try {
-            if(response.Data.length<=0 /*|| response.total <= (this.param.pageIndex*this.param.pageSize)*/){
+            if(response.length<=0 /*|| response.total <= (this.param.pageIndex*this.param.pageSize)*/){
                 this.AllLoaded = true;
                 return this.LoadMoreLoading = false;
             };

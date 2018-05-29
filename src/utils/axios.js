@@ -35,9 +35,6 @@ class Http {
             // `withCredentials` indicates whether or not cross-site Access-Control requests
             // should be made using credentials
             // withCredentials: true, // default
-            headers: {
-                'Content-Type':'text/plain'
-            },
             data: options.param
         }).then(response => {
             Indicator.close();
